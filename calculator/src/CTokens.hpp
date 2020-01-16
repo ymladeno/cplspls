@@ -8,16 +8,9 @@
 #ifndef CTOKENS_HPP_
 #define CTOKENS_HPP_
 
+#include "CSimpleToken.hpp"
 #include <string>
 #include <istream>
-
-enum class Kind : char {name, number, end, plus='+', minus='-', mul='*', div='/', print=';', assign='=', lp='(', rl='('};
-
-struct CSimpleToken {
-    Kind kind;
-    std::string string_val;
-    double number_val;
-};
 
 class CTokens {
 public:

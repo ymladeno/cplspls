@@ -11,6 +11,7 @@
 #include "CTokens.hpp"
 #include <string>
 #include <map>
+#include <iostream>
 
 class Calculator {
 public:
@@ -18,8 +19,14 @@ public:
     double term(bool get);
     double prim(bool get);
 
+    void addConstant(const std::string& name, const double val) {
+        table[name] = val;
+    }
+
+    void calculate();
+
 private:
-    CTokens ts;
+    CTokens ts {std::cin};
     std::map<std::string, double> table;
 };
 

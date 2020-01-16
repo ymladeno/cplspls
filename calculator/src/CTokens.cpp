@@ -6,7 +6,7 @@
  */
 
 #include "CTokens.hpp"
-#include "error.hpp"
+#include "Error.hpp"
 #include <cctype>
 
 CSimpleToken CTokens::get() {
@@ -43,8 +43,7 @@ CSimpleToken CTokens::get() {
             }
     }
 
-    error("bad token");
-    return ct = {Kind::print};
+    __ERROR("bad token");
 }
 
 const CSimpleToken& CTokens::current() {

@@ -6,7 +6,7 @@
  */
 
 #include "Calculator.hpp"
-#include "error.hpp"
+#include "Error.hpp"
 #include <iostream>
 
 //add and subtract
@@ -44,7 +44,7 @@ double Calculator::term(bool get) {
                 left/=d;
                 break;
             }
-            return -1;                      //error("divide by zero")
+            __ERROR("divide by zero");
         default:
             return left;
         }
@@ -61,13 +61,17 @@ double Calculator::prim(bool get) {
     case Kind::name:
         if (table.end() != table.find(ts.current().string_val)) {
             double& d = table[ts.current().string_val];
+            if (ts.current().kind == Kind::assign) {
+                d = expr(true);
+            }
             return d;
         }
-        return error("Key not found");
+        __ERROR("Key not found");
 
     case Kind::number:
     {
-        double d = ts.get().number_val;
+        double d = ts.current().number_val;
+        ts.get();
         return d;
     }
 
@@ -78,14 +82,26 @@ double Calculator::prim(bool get) {
     {
         auto e = expr(true);
         if (ts.current().kind != Kind::rl) {
-            return error("')' expected!");
+            __ERROR("')' expected!");
         }
         ts.get();                           //eat ')'
         return e;
     }
 
     default:
-        return error("primary expected");
+        __ERROR("primary expected");
     }
 }
 
+void Calculator::calculate() {
+    for(;;) {
+        ts.get();
+        switch(ts.current().kind) {
+        case Kind::end:
+            break;
+        case Kind::print:
+            continue;
+        }
+        std::cout << expr(false) << std::endl;
+    }
+}
