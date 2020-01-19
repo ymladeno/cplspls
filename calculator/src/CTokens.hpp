@@ -14,12 +14,13 @@
 
 class CTokens {
 public:
-    CTokens(std::istream& is) : is{is} {}
+    CTokens(std::istream& ip) : is{&ip} {}
     CSimpleToken get();                         //next
     const CSimpleToken& current();              //most recently read
+    void set_input(std::istream& ip) { is = &ip; };
 
 private:
-    std::istream& is;
+    std::istream* is;
     CSimpleToken ct {Kind::end};
 };
 

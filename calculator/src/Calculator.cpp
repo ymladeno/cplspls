@@ -96,10 +96,10 @@ double Calculator::prim(bool get) {
 void Calculator::calculate() {
     for(;;) {
         ts.get();
-        switch(ts.current().kind) {
-        case Kind::end:
+        if (ts.current().kind == Kind::end) {
             break;
-        case Kind::print:
+        }
+        if (ts.current().kind == Kind::print) {
             continue;
         }
         std::cout << expr(false) << std::endl;

@@ -15,6 +15,7 @@
 
 class Calculator {
 public:
+    Calculator(CTokens& ts) : ts{ts} {}
     double expr(bool get);
     double term(bool get);
     double prim(bool get);
@@ -26,7 +27,7 @@ public:
     void calculate();
 
 private:
-    CTokens ts {std::cin};
+    CTokens& ts;
     std::map<std::string, double> table;
 };
 

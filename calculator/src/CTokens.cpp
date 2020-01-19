@@ -11,13 +11,20 @@
 
 CSimpleToken CTokens::get() {
     char ch;
-    is >> ch;
+    do {
+        if (!is->get(ch)) {
+            return ct = {Kind::end};
+        }
+    } while(ch != '\n' && isspace(ch));
 
     switch (ch) {
         case 0:
             return ct = {Kind::end};
 
-        case ';':
+        case ';' :
+        case '\n':
+            return ct = {Kind::print};
+
         case '+':
         case '-':
         case '*':
@@ -29,15 +36,18 @@ CSimpleToken CTokens::get() {
 
         case '0': case '1': case '2': case '3': case '4': case '5': case '6': case '7': case '8': case '9':
         case '.':
-            is.putback(ch);
-            is >> ct.number_val;
+            is->putback(ch);
+            *is >> ct.number_val;
             ct.kind = Kind::number;
             return ct;
 
         default:
             if (std::isalpha(ch)) {
-                is.putback(ch);
-                is >> ct.string_val;
+                ct.string_val = ch;
+                while(is->get(ch) && std::isalnum(ch)) {
+                    ct.string_val += ch;
+                }
+                is->putback(ch);
                 ct.kind = Kind::name;
                 return ct;
             }
