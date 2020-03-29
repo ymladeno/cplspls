@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/home/osboxes/eclipse-workspace/cplspls/vector/build/default",
+  "command": "/usr/bin/c++    -g   -o src/CMakeFiles/vect.dir/main.cpp.o -c /home/osboxes/eclipse-workspace/cplspls/vector/src/main.cpp",
+  "file": "/home/osboxes/eclipse-workspace/cplspls/vector/src/main.cpp"
+}
+]
