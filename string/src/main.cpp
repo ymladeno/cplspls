@@ -16,7 +16,7 @@ int main() {
     s += 'l';
     s += 'm';
     s += 'n';
-    std::cout << s << '\n';
+    std::cout << s << " size=" << s.size() << std::endl;
 
     String s2 = "Hell";
     s2 += " and high water";

@@ -37,10 +37,9 @@ public:
     Iterator<T> end();
 
 private:
-
-    Link*   free;
-    Link*   get_free();
-    Link*   head;
+    Link<T>*   free;
+    Link<T>*   get_free();
+    Link<T>*   head;
 };
 
 #endif /* LIST_HPP_ */
