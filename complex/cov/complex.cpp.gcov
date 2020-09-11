@@ -1,0 +1,108 @@
+        -:    0:Source:../src/complex.cpp
+        -:    0:Graph:../Debug/src/complex.gcno
+        -:    0:Data:../Debug/src/complex.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1://============================================================================
+        -:    2:// Name        : complex.cpp
+        -:    3:// Author      : 
+        -:    4:// Version     :
+        -:    5:// Copyright   : Your copyright notice
+        -:    6:// Description : Hello World in C++, Ansi-style
+        -:    7://============================================================================
+        -:    8:
+        -:    9:#include <iostream>
+        -:   10:#include <gtest/gtest.h>
+        -:   11:
+        -:   12:class complex {
+        -:   13:    double re, im;
+        -:   14:
+        -:   15:public:
+        5:   16:    complex(double a, double b) : re{a}, im{b} {}
+        1:   17:    complex(double a) : re{a}, im{} {}
+        -:   18:    // needs access to representation
+        2:   19:    complex& operator+=(complex a) {
+        2:   20:        re += a.real();
+        2:   21:        im += a.imag();
+        2:   22:        return *this;
+        -:   23:    }
+        -:   24:    complex& operator+=(double a) {
+        -:   25:        re += a;
+        -:   26:        return *this;
+        -:   27:    }
+        6:   28:    constexpr double real() { return re; }
+        6:   29:    constexpr double imag() { return im; }
+        -:   30:    // ...
+        -:   31:};
+        -:   32:
+        1:   33:complex operator+(complex a, complex b)
+        -:   34:{
+        1:   35:    return a += b;                          // access representation through +=
+        -:   36:}
+        -:   37:
+        -:   38://complex operator+(complex a, double b)
+        -:   39://{
+        -:   40://    return a += b;                   // access representation through +=
+        -:   41://}
+        -:   42://
+        -:   43://complex operator+(double a, complex b)
+        -:   44://{
+        -:   45://    return b += a;                   // access representation through +=
+        -:   46://}
+        -:   47:
+        5:   48:TEST(Complex, CtorWith2Params) {
+        1:   49:    complex c{3.0, 2.0};
+        -:   50:
+        1:   51:    EXPECT_EQ(3.0, c.real());
+        1:   52:    EXPECT_EQ(2.0, c.imag());
+        1:   53:}
+        -:   54:
+        5:   55:TEST(Complex, CtorWith1Param) {
+        1:   56:    complex c{3.0};
+        -:   57:
+        1:   58:    EXPECT_EQ(3.0, c.real());
+        1:   59:    EXPECT_EQ(0.0, c.imag());
+        1:   60:}
+        -:   61:
+        5:   62:TEST(Complex, CtrCopy) {
+        1:   63:    complex c1{3.0, 2.0};
+        1:   64:    complex c2{4.0, 8.0};
+        -:   65:
+        1:   66:    complex s{c1+c2};
+        -:   67:
+        1:   68:    EXPECT_EQ(7.0, s.real());
+        1:   69:    EXPECT_EQ(10.0, s.imag());
+        1:   70:}
+        -:   71:
+        5:   72:TEST(Complex, OprSum) {
+        1:   73:    complex c1{3.0, 2.0};
+        1:   74:    complex c2{4.0, 8.0};
+        -:   75:
+        1:   76:    complex s{c1};
+        -:   77:
+        1:   78:    s+=c2;
+        -:   79:
+        1:   80:    EXPECT_EQ(7.0, s.real());
+        1:   81:    EXPECT_EQ(10.0, s.imag());
+        4:   82:}
+        -:   83:
+        -:   84:#ifndef UTEST
+        -:   85:int main() {
+        -:   86:    complex x {1.0, 3.0};
+        -:   87:    complex y {2.0, 6.0 };
+        -:   88:    complex z {5.0, 8.0 };
+        -:   89:
+        -:   90:    complex r1 {x+y+z};
+        -:   91:    complex r2 {x};
+        -:   92:
+        -:   93:    r2+=y;
+        -:   94:    r2+=z;
+        -:   95:
+        -:   96:    auto c1 = x+y; // calls operator+(complex,complex)
+        -:   97:    auto c2 = x+2; // calls operator+(complex,double)
+        -:   98:    auto c3 = 2+x; // calls operator+(double,complex)
+        -:   99:    auto c4 = 2+3; // built-in integer addition
+        -:  100:
+        -:  101:	return 0;
+        -:  102:}
+        -:  103:#endif
