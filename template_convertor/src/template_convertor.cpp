@@ -27,6 +27,7 @@ int main() {
     auto x2 = to<std::string>(1.2);         // Source is deduced to double
     auto x3 = to<>(1.2);                    // Target is defaulted to string; Source is deduced to double
     auto x4 = to(1.2);                      // the <> is redundant
+    auto x5 = to<char>(10);
 
 	return 0;
 }

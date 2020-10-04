@@ -50,13 +50,24 @@ public:
 };
 
 template<>
+class complex<long double> {
+    long double re, im;
+public:
+    constexpr complex() : re{}, im{} {}
+    complex& operator=(long double);
+    complex& operator+=(long double);
+    complex& operator=(const complex&);
+};
+
+template<>
 class complex<double> {
     double re{}, im{};
 public:
-    constexpr complex(double r = 0.0, double i = 0.0) : re{r}, im{i} {}
-    constexpr complex(const complex<float>&) {};
-    explicit constexpr complex(const complex<long double>&);
-
+    constexpr complex(double r = 0.0, double i = 0.0) : re{r}, im{i} {
+        std::cout << __PRETTY_FUNCTION__ << std::endl;
+    }
+    constexpr complex(const complex<float>&) : re{1000}, im{22} {};
+    explicit constexpr complex(const complex<long double>& c) : re {}, im{} {}
     complex& operator+=(const complex a) {
         re += a.real();
         im += a.imag();
@@ -70,30 +81,31 @@ public:
 template<typename Scalar>
 complex<Scalar> operator+(complex<Scalar> a, complex<Scalar> b)
 {
-    return a += b;                          // access representation through +=
+    return a += b;                                  // access representation through +=
 }
 
 template<typename Scalar>
 complex<Scalar> operator+(complex<Scalar> a, int b)
 {
-    return a+=b;                                // access representation through +=
+    return a+=b;                                    // access representation through +=
 }
 
 template<typename Scalar>
 complex<Scalar> operator+(int a, complex<Scalar> b)
 {
-    return b+=a;                          // access representation through +=
+    return b+=a;                                    // access representation through +=
 }
 
 int main()
 {
-    //constexpr complex<double> cd{ complex<float>{} };
+    constexpr complex<double> cd{ complex<float>{} };
     complex<double> x {1.0, 3.0};
-    complex<double> y {2.0, 6.0 };
-    complex<double> z {5.0, 8.0 };
+    complex<double> y {2.0, 6.0};
+    complex<double> z {5.0, 8.0};
 
     complex<double> r1 {x+y+z};
     complex<double> r2 {x};
+    constexpr complex<double> r3{ complex<long double>{} };
 
     r2+=y;
     r2+=z;
