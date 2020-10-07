@@ -22,7 +22,7 @@ class Ptr {
     T* p;
 
 public:
-    Ptr(T*);
+    Ptr(T* t) : p{t} {}
 
     // copy constructor
     Ptr(const Ptr& x) : p{x.p} {}
@@ -34,11 +34,11 @@ public:
 };
 
 template<typename T>
-    template<typename T2>
-        Ptr<T>::operator Ptr<T2>()
-        {
-            return Ptr<T2>{p};
-        }
+template<typename T2>
+Ptr<T>::operator Ptr<T2>()
+{
+    return Ptr<T2>{p};
+}
 
 void f(Ptr<Circle> pc)
 {
@@ -50,7 +50,7 @@ void f(Ptr<Circle> pc)
 }
 
 int main() {
-    Ptr<Circle> pc;
+    Ptr<Circle> pc{new Circle{}};
     f(pc);
 	return 0;
 }
