@@ -10,6 +10,9 @@
 #include <vector>
 
 template<typename N>
+bool operator<(const N& n1, const N& n2);
+
+template<typename N>
 struct Node_base { // doesn’t know about Val (the user data)
     N* left_child;
     N* right_child;
@@ -17,6 +20,22 @@ struct Node_base { // doesn’t know about Val (the user data)
     Node_base() : left_child{}, right_child{} {
         //std::cout << "Node_base()\n";
     }
+
+    void insert(N* n) {
+
+        if (!left_child)
+            add_left(n);
+        else {
+            if (*n < *left_child) {
+                add_left(n);
+            }
+            else {
+                add_right(n);
+            }
+        }
+    }
+
+private:
     void add_left(N* p)
     {
         if (left_child == nullptr)
@@ -42,20 +61,18 @@ struct Node : Node_base<Node<Val>> {
     }
 };
 
+template<typename N>
+bool operator<(const N& n1, const N& n2) {
+    return n1.v<n2.v;
+}
+
 using My_node = Node<double>;
 
 void user(const std::vector<double>& v)
 {
     My_node root{};
-    int i = 0;
     for (auto x : v) {
-        auto p = new My_node{x};
-        if (i++%2) {    // choose where to insert
-            root.add_left(p);
-        }
-        else {
-            root.add_right(p);
-        }
+        root.insert(new My_node{x});
     }
 }
 

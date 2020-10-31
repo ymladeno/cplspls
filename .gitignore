@@ -1,3 +1,4 @@
 .metadata/
 test/
 */Debug/
+*/.settings/language.settings.xml
