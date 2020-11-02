@@ -4,16 +4,21 @@
 // Version     :
 // Copyright   : Your copyright notice
 // Description : Balance tree
+//               More info : binary tree framework [Austern,2003]
 //============================================================================
 
 #include <iostream>
 #include <vector>
 
-template<typename N>
-bool operator<(const N& n1, const N& n2);
+struct Red_black_balance {
+    template<typename N>
+    bool compare(const N& n1, const N& n2) {
+        return n1.v<n2.v;
+    }
+};
 
-template<typename N>
-struct Node_base { // doesn’t know about Val (the user data)
+template<typename N, typename Balance>
+struct Node_base : Balance {
     N* left_child;
     N* right_child;
 
@@ -26,7 +31,7 @@ struct Node_base { // doesn’t know about Val (the user data)
         if (!left_child)
             add_left(n);
         else {
-            if (*n < *left_child) {
+            if (this->compare(*n, *left_child)) {
                 add_left(n);
             }
             else {
@@ -53,26 +58,22 @@ private:
     }
 };
 
-template<typename Val>
-struct Node : Node_base<Node<Val>> {
+template<typename Val, typename Balance>
+struct Node : Node_base<Node<Val, Balance>, Balance> {
     Val v;
     Node(Val v=0) : v{v} {
         //std::cout << "Node(Val v=0)\n";
     }
 };
 
-template<typename N>
-bool operator<(const N& n1, const N& n2) {
-    return n1.v<n2.v;
-}
-
-using My_node = Node<double>;
+template<typename T>
+using Rbnode = Node<T, Red_black_balance>;
 
 void user(const std::vector<double>& v)
 {
-    My_node root{};
+    Rbnode<double> root{};
     for (auto x : v) {
-        root.insert(new My_node{x});
+        root.insert(new Rbnode<double>{x});
     }
 }
 
