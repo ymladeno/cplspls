@@ -3,7 +3,7 @@
 // Author      : 
 // Version     :
 // Copyright   : Your copyright notice
-// Description : Hello World in C++, Ansi-style
+// Description : Section 28.2.1.1 Metaprograming 
 //============================================================================
 
 #include <iostream>
@@ -64,7 +64,7 @@ void f2()
     Holder<double> v1;
 
     // the array goes on the free store (on heap)
-    Holder<std::array<double ,200>> v2;
+    Holder<std::array<double, 200>> v2;
 
     // ...
     *v1 = 7.7;    // Scoped provides pointer-like access (* and [])
