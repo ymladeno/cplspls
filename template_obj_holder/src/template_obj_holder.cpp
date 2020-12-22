@@ -3,11 +3,20 @@
 // Author      : 
 // Version     :
 // Copyright   : Your copyright notice
-// Description : Section 28.2.1.1 Metaprograming 
+// Description : Section 28.2.1.1 Metaprogramming
+//               Example from book can't be compiled, because p = &std::array<double, 200>,
+//               instead to point to array.data()
+//               TODO: specify template for POD and array data
 //============================================================================
 
 #include <iostream>
 #include <array>
+
+template<typename T>
+typename T::value_type* allocate() {
+    auto p = new typename T::value_type[200];
+    return p;
+}
 
 template<typename T>
 struct On_heap {
@@ -18,13 +27,11 @@ struct On_heap {
 
     T& operator*()  { return *p; }
     T* operator->() { return p;  }
-    T& operator[](int i)  { return p[i]; }
+    T& operator[](std::size_t i)  { return p[i]; }
 
     // prevent copying
     On_heap(const On_heap&) = delete;
     On_heap operator=(const On_heap&) = delete;
-
-    On_heap operator=(const double) { return *this; }
 
 private:
     // pointer to object on the free store
@@ -67,8 +74,8 @@ void f2()
     Holder<std::array<double, 200>> v2;
 
     // ...
-    *v1 = 7.7;    // Scoped provides pointer-like access (* and [])
-    v2[77] = 9.9; // On_heap provides pointer-like access (* and [])
+    *v1 = 7.7;     // Scoped provides pointer-like access (* and [])
+    v2[77] = 9.9;  // On_heap provides pointer-like access (* and [])
     // ...
 }
 

@@ -17,8 +17,8 @@ struct Red_black_balance {
     }
 };
 
-template<typename N, typename Balance>
-struct Node_base : Balance {
+template<typename N>
+struct Node_base : N::balance_type {
     N* left_child;
     N* right_child;
 
@@ -59,11 +59,13 @@ private:
 };
 
 template<typename Val, typename Balance>
-struct Node : Node_base<Node<Val, Balance>, Balance> {
-    Val v;
+struct Node : public Node_base<Node<Val, Balance>> {
+    using balance_type = Balance;
+
     Node(Val v=0) : v{v} {
         //std::cout << "Node(Val v=0)\n";
     }
+    Val v;
 };
 
 template<typename T>

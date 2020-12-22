@@ -3,7 +3,7 @@
 // Author      : 
 // Version     :
 // Copyright   : Your copyright notice
-// Description : Hello World in C++, Ansi-style
+// Description : Section 28.3 Metaprogramming
 //============================================================================
 
 #include <iostream>
