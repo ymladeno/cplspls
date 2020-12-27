@@ -8,6 +8,10 @@
 
 #include <iostream>
 
+////////////////////
+// Template variant
+////////////////////
+
 template<int N>
 constexpr int fac()
 {
@@ -22,7 +26,10 @@ constexpr int fac<1>()
 
 constexpr int x5 = fac<5>();
 
-// Alternative
+////////////////////
+// constexpr variant
+////////////////////
+
 constexpr int fac(int i)
 {
     return (i<2)?1:i*fac(i-1);
@@ -30,8 +37,24 @@ constexpr int fac(int i)
 
 constexpr int x6 = fac(6);
 
+////////////////////
+// class variant
+////////////////////
+template<int N>
+struct Fac {
+    static const int value = N*Fac<N-1>::value;
+};
+
+template<>
+struct Fac<1> {
+    static const int value = 1;
+};
+
+constexpr int x7 = Fac<7>::value;
+
 int main() {
     std::cout << x5 << std::endl;
-    std::cout << x6;
-	return 0;
+    std::cout << x6 << std::endl;
+    std::cout << x7 << std::endl;
+    return 0;
 }
