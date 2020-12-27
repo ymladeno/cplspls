@@ -20,7 +20,7 @@ struct conditional<false,T,F> {
 };
 
 template<bool B, typename T, typename F>
-using Conditional = typename std::conditional<B,T,F>::type;
+using Conditional = typename conditional<B,T,F>::type;
 
 struct X {
     void operator()(int x) { std::cout << "X" << x <<"!"; }
