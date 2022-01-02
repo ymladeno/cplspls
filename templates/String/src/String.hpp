@@ -11,54 +11,11 @@
 #include <stdexcept>
 #include <iostream>
 
-//template<typename T>
-//constexpr bool Totally_ordered()
-//{
-//    return Equality_comparable<T>() // has == and !=
-//            && std::Has_less<T>()     && Boolean<Less_result<T>>()
-//            && Has_greater<T>()       && Boolean<Greater_result<T>>()
-//            && Has_less_equal<T>()    && Boolean<Less_equal_result<T>>()
-//            && Has_greater_equal<T>() && Boolean<Greater_equal_result<T>>();
-//}
-//
-//template<typename T>
-//constexpr bool Equality_comparable()
-//{
-//    return Has_equal<T>() && Boolean<Equal_result<T>>()
-//            && Has_not_equal<T>() && Boolean<Not_equal_result<T>>();
-//}
-//
-//template<typename T>
-//constexpr bool Semiregular()
-//{
-//    return Destructible<T>()
-//            && Default_constructible<T>()
-//            && Move_constructible<T>()
-//            && Move_assignable<T>()
-//            && Copy_constructible<T>()
-//            && Copy_assignable<T>();
-//}
-//
-//template<typename T>
-//constexpr bool Regular()
-//{
-//    return Semiregular<T>() && Equality_comparable<T>();
-//}
-//
-//template<typename T>
-//constexpr bool Ordered()
-//{
-//    return Regular<T>() && Totally_ordered<T>();
-//}
-
-
 template<typename C>
 class String {
-    //static_assert(Ordered<C>(),"String's character type is not ordered");
-
 public:
     String();                                           //default ctor
-    String(const C* p);
+    explicit String(const C* p);
 
     String(const String& x);
     String& operator=(const String&);                   // copy assignment
@@ -106,14 +63,6 @@ private:
     // ancillary member functions:
     void copy_from(const String& x);
     void move_from(String& x);
-};
-
-template<>
-class String<char> {
-public:
-    String(const char* c) {
-
-    }
 };
 
 template<typename C> C* expand(const C* ptr, int n);

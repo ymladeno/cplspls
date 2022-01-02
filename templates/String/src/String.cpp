@@ -107,7 +107,7 @@ void String<C>::move_from(String& x)
 
 //*************** HELPER FUNCTIONS *************
 template<typename C>
-char* expand(const C* ptr, int n)    // expand into free store
+C* expand(const C* ptr, int n)    // expand into free store
 {
     char* p = new C[n];
     strcpy(p,ptr);
@@ -135,7 +135,7 @@ std::ostream& operator<<(std::ostream& os, const String<C>& s)
 template<typename C>
 std::istream& operator>>(std::istream& is, String<C>& s)
 {
-    s = "";                         // clear the target string
+    s = String<C>("");              // clear the target string
     is>>std::ws;                    // skip whitespace (§38.4.5.1)
     char ch = ' ';
     while(is.get(ch) && !isspace(ch))
