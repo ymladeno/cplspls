@@ -27,9 +27,9 @@ template<int N>
 using int_exact = typename int_exact_traits<N>::type;   // define alias for convenient notation
 
 
-int_exact<8> a = 7; // int_exact<8> is an int with 8 bits
-
 int main() {
-
+    int_exact<8> a = 7; // int_exact<8> is an int with 8 bits
+    std::cout << "As a char: " << a << "\n";
+    std::cout << "As a int: " << static_cast<int>(a) << "\n";
 	return 0;
 }
