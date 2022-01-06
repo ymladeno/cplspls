@@ -16,8 +16,8 @@ void mysort(std::vector<T>& v) // definition
 {
     Compare cmp;
     const size_t n = v.size();
-    for (int gap=n/2; 0<gap; gap/=2)
-        for (int i=gap; i<n; i++)
+    for (auto gap=n/2; 0<gap; gap/=2)
+        for (auto i=gap; i<n; i++)
             for (int j=i-gap; 0<=j; j-=gap)
                 if (cmp(v[j+gap], v[j])) {              // swap v[j] and v[j+gap]
                     std::swap(v[j],v[j+gap]);
@@ -37,6 +37,7 @@ int main() {
     print_all(vi);
     mysort(vi);
     print_all(vi);
-
+    mysort<int, std::greater<int>>(vi);
+    print_all(vi);
 	return 0;
 }
