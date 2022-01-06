@@ -25,6 +25,9 @@ endif
 ifneq ($(strip $(CXX_DEPS)),)
 -include $(CXX_DEPS)
 endif
+ifneq ($(strip $(IPP_DEPS)),)
+-include $(IPP_DEPS)
+endif
 ifneq ($(strip $(CPP_DEPS)),)
 -include $(CPP_DEPS)
 endif
@@ -38,19 +41,19 @@ endif
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all: test_reference_template
+all: XRef
 
 # Tool invocations
-test_reference_template: $(OBJS) $(USER_OBJS)
+XRef: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C++ Linker'
-	g++  -o "test_reference_template" $(OBJS) $(USER_OBJS) $(LIBS)
+	g++  -o "XRef" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(CC_DEPS)$(C++_DEPS)$(EXECUTABLES)$(C_UPPER_DEPS)$(CXX_DEPS)$(OBJS)$(CPP_DEPS)$(C_DEPS) test_reference_template
+	-$(RM) $(CC_DEPS)$(C++_DEPS)$(EXECUTABLES)$(C_UPPER_DEPS)$(CXX_DEPS)$(OBJS)$(IPP_DEPS)$(CPP_DEPS)$(C_DEPS) XRef
 	-@echo ' '
 
 .PHONY: all clean dependents

@@ -51,9 +51,9 @@ private:
 int main() {
 
     std::string x {"There and back again"};
-//    Xref<std::string> r1 {7,"Here"};                    // r1 owns a copy of string{"Here"}
-//    Xref<std::string> r2 {9,x};                         // r2 just refers to x
-//    Xref<std::string> r3 {3,new std::string{"There"}};  // r3 owns the string{"There"}
+    Xref<std::string> r1 {7,"Here"};                    // r1 owns a copy of string{"Here"}
+    Xref<std::string> r2 {9,x};                         // r2 just refers to x
+    Xref<std::string> r3 {3,new std::string{"There"}};  // r3 owns the string{"There"}
 
     auto p1 = make_unique<Xref<std::string>>(7,"Here");
     auto p2 = make_unique<Xref<std::string>>(9,x);
