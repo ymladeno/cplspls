@@ -8,18 +8,13 @@
 #ifndef LIST_HPP_
 #define LIST_HPP_
 
-class Underflow {
-
-};
+class Underflow {};
 
 template<class T>
 class List {
 public:
     void insert(T);
     T get();
-
-    // ...
-    class Underflow {};
 
 private:
     struct Link {
@@ -39,6 +34,6 @@ private:
 };
 
 template<typename T>
-void print_all(const List<T>);
+void print_all(List<T>);
 
 #endif /* LIST_HPP_ */

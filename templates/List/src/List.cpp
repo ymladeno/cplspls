@@ -7,10 +7,6 @@
 
 #include "List.hpp"
 
-//lnk val
-//lnk next
-
-//head->
 template<class T>
 void List<T>::insert(T val)
 {
@@ -36,7 +32,7 @@ template<class T>
 auto List<T>::get_free()->Link*
 {
     if (free == 0) {
-        // ... allocate a new chunk and place its Links on the free list ...
+        free = new Link{};
     }
 
     Link*   p = free;
@@ -44,3 +40,14 @@ auto List<T>::get_free()->Link*
     return p;
 }
 
+template<typename T>
+void print_all(List<T> l) {
+    try {
+        while(true) {
+            auto val = l.get();
+            std::cout << val << " ";
+        }
+    } catch(const Underflow& e) {
+        std::cout << "\n";
+    }
+}
