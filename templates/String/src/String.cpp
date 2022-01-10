@@ -8,6 +8,11 @@
 #include "String.hpp"
 #include <cstring>
 
+template<typename T>
+constexpr bool Streamable() {
+    return true;
+}
+
 template<typename C>
 String<C>::String()
 : sz{0},
@@ -129,7 +134,9 @@ const C* end(const String<C>& x)
 template<typename C>
 std::ostream& operator<<(std::ostream& os, const String<C>& s)
 {
-    return os << s.c_str();
+    static_assert(Streamable<C>(), "String's character is not streamable");
+    for(auto i=0; i!=s.size(); ++i) os << s[i];
+    return os;
 }
 
 template<typename C>

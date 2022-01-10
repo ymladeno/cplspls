@@ -11,9 +11,15 @@
 #include <stdexcept>
 #include <iostream>
 
+template<typename T>
+constexpr bool Ordered() {
+    return true;
+}
+
 template<typename C>
 class String {
 public:
+    static_assert(Ordered<C>(), "String's character type is not ordered");
     String();                                           //default ctor
     explicit String(const C* p);
 
