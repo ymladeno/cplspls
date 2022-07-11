@@ -7,6 +7,8 @@
 //               More info : binary tree framework [Austern,2003]
 //============================================================================
 
+// Can't be compiled
+
 #include <iostream>
 #include <vector>
 
@@ -60,7 +62,7 @@ private:
 
 template<typename Val, typename Balance>
 struct Node : public Node_base<Node<Val, Balance>> {
-    using balance_type = Balance;
+    // using balance_type = Balance;
 
     Node(Val v=0) : v{v} {
         //std::cout << "Node(Val v=0)\n";

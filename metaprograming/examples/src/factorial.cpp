@@ -35,7 +35,7 @@ constexpr int fac(int i)
     return (i<2)?1:i*fac(i-1);
 }
 
-constexpr int x6 = fac(6);
+constexpr int x6 = fac(5);
 
 ////////////////////
 // class variant
@@ -50,7 +50,7 @@ struct Fac<1> {
     static const int value = 1;
 };
 
-constexpr int x7 = Fac<7>::value;
+constexpr int x7 = Fac<5>::value;
 
 int main() {
     std::cout << x5 << std::endl;

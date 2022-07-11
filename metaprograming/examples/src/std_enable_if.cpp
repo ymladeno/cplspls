@@ -18,7 +18,7 @@ struct enable_if {
 };
 
 template<typename T>
-struct enable_if<false , T> {};             // no ::type if B==false
+struct enable_if<false, T>{};             // no ::type if B==false
 
 template<bool B, typename T = void>
 using Enable_if = typename enable_if<B,T>::type;
@@ -36,8 +36,8 @@ struct succeeded<failure> : std::false_type { };
 
 struct Y {};
 
-void f(int i) { }
-void f(const Y& y) { }
+void f(int i) { std::cout << "f(int)\n"; }
+void f(const Y& y) { std::cout << "f(Y)\n"; }
 
 template<typename T>
 struct get_f_result {
@@ -63,19 +63,23 @@ constexpr bool Has_f()
 template<typename T>
 class X {
 public:
-    template<typename T1=T>
-    typename std::enable_if<Has_f<T1>()>::type use_f(const T1& t)
-    {
-        //
+    Enable_if<Has_f<T>()> use_f(const T& t) {
         f(t);
-        //
     }
+
+    // template<typename T1=T>
+    // typename std::enable_if<Has_f<T1>()>::type use_f(const T1& t)
+    // {
+    //     //
+    //     f(t);
+    //     //
+    // }
 };
 
 int main() {
-    X<int> x;
+    X<int> x{};
     int i{10};
-    x.use_f<int>(i);
+    x.use_f(i);
 
     X<Y> x1{};
     Y y{};

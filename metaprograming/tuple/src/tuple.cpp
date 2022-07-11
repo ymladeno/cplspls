@@ -8,50 +8,15 @@
 
 #include <iostream>
 #include "select.cpp"
+#include <tuple>
 
 class Nil {};
 
 template<typename T1=Nil, typename T2=Nil, typename T3=Nil, typename T4=Nil>
-struct Tuple;
-
-template<typename Ret, int N>
-struct getNth {                 // getNth() remembers the type (Ret) of the Nth element
-    template<typename T>
-    static Ret& get(T& t)       // get the value element N from t’s Base
-    {
-        return getNth<Ret,N-1>::get(*t.base());
-    }
-
-    template<typename T>
-    static const Ret& get(const T& t) // get the value element N from t’s Base
-    {
-        return getNth<Ret,N-1>::get(*t.base());
-    }
-};
-
-template<typename Ret>
-struct getNth<Ret,0> {
-    template<typename T> static Ret& get(T& t) { return t.x; }
-    template<typename T> static const Ret& get(const T& t) { return t.x; }
-};
-
-template<int N, typename T1, typename T2, typename T3, typename T4>
-Select<N, T1, T2, T3, T4>& get(Tuple<T1, T2, T3, T4>& t)
-{
-    return getNth<Select<N, T1, T2, T3, T4>,N>::get(t);
-}
-
-template<int N, typename T1, typename T2, typename T3>
-const Select<N, T1, T2, T3>& get(const Tuple<T1, T2, T3>& t)
-{
-    return getNth<Select<N, T1, T2, T3>,N>::get(t);
-}
-
-template<typename T1, typename T2, typename T3, typename T4>
 struct Tuple : Tuple<T2, T3, T4> {                                          // layout: {T2,T3,T4} before T1
     T1 x;
     using Base = Tuple<T2, T3, T4>;
-          Base* base()       { return static_cast<Base*>(this); }
+    Base* base() { return static_cast<Base*>(this); }
     const Base* base() const { return static_cast<const Base*>(this); }
     Tuple(const T1& t1, const T2& t2, const T3& t3, const T4& t4) : Base{t2,t3,t4}, x{t1} { }
 };
@@ -110,7 +75,7 @@ void print_elements(std::ostream& os, const Tuple<T1,T2>& t)
 template<typename T1>
 void print_elements(std::ostream& os, const Tuple<T1>& t)
 {
-    os << t.x << ", ";              // t’s x
+    os << t.x;                      // t’s x
 }
 
 template<>
@@ -126,6 +91,39 @@ std::ostream& operator<<(std::ostream& os, const Tuple<T1,T2,T3,T4>& t)
     print_elements(os,t);
     os << " }";
     return os;
+}
+
+template<typename Ret, int N>
+struct getNth {                 // getNth() remembers the type (Ret) of the Nth element
+    template<typename T>
+    static Ret& get(T& t)       // get the value element N from t’s Base
+    {
+        return getNth<Ret,N-1>::get(*t.base());
+    }
+
+    template<typename T>
+    static const Ret& get(const T& t) // get the value element N from t’s Base
+    {
+        return getNth<Ret,N-1>::get(*t.base());
+    }
+};
+
+template<typename Ret>
+struct getNth<Ret,0> {
+    template<typename T> static Ret& get(T& t) { return t.x; }
+    template<typename T> static const Ret& get(const T& t) { return t.x; }
+};
+
+template<int N, typename T1, typename T2, typename T3, typename T4>
+Select<N, T1, T2, T3, T4>& get(Tuple<T1, T2, T3, T4>& t)
+{
+    return getNth<Select<N, T1, T2, T3, T4>,N>::get(t);
+}
+
+template<int N, typename T1, typename T2, typename T3, typename T4>
+const Select<N, T1, T2, T3>& get(const Tuple<T1, T2, T3, T4>& t)
+{
+    return getNth<Select<N, T1, T2, T3, T4>,N>::get(t);
 }
 
 template<typename T1, typename T2, typename T3, typename T4>

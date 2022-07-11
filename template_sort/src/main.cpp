@@ -9,6 +9,12 @@
 #include <iostream>
 #include <vector>
 #include <utility>
+#include <functional>
+
+template<typename T>
+bool less(T a, T b) {
+    return a < b;
+}
 
 // Shell sort (Knuth, Vol. 3, pg. 84)
 template<typename T, typename Compare = std::less<T>>

@@ -21,12 +21,10 @@ constexpr bool Is_class()
 
 template<typename T>
 struct Smart_pointer {
-    // ...
+    Smart_pointer(T val) : p{ new T{val}} {}
     T& operator*() { return *p; }                             //return reference to whole object
     template<class T1=T>
     Enable_if<Is_class<T1>(),T1>* operator->() { return p; }  // select a member (for classes only)
-    // ...
-
 private:
     T* p;
 };
@@ -37,7 +35,7 @@ struct complex {
 };
 
 template<class I>
-constexpr bool Input_iterator() { return false; }
+constexpr bool Input_iterator() { return true; }
 
 template<typename T>
 class myvector {
@@ -58,12 +56,13 @@ void f(Smart_pointer<double> p, Smart_pointer<complex<double>> q)
     auto d0 = *p; //OK
     auto c0 = *q; //OK
     auto d1 = q->real(); // OK
-    //auto d2 = p->real(); // error : p doesn’t point to a class object
+    // auto d2 = p->real(); // error : p doesn’t point to a class object
     // ...
 }
 
 int main()
 {
     myvector<int> i(10, 20);
+    // Smart_pointer<double> 
 }
 

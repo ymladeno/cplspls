@@ -7,7 +7,7 @@
 //============================================================================
 
 #include <iostream>
-
+#include <cstdio>
 
 template<typename F>
 struct Final_action {
@@ -23,6 +23,7 @@ Final_action<F> final(F f) {
 
 int main()
 {
+    // int *pi = new int{7};
     auto act = final([](){std::cout << "cleaning\n";});
 
     std::cout << "Executing\n";

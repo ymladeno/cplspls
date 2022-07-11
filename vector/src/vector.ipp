@@ -6,6 +6,7 @@
  */
 
 #include <algorithm>
+#include <memory>
 
 template<class T, class A>
 vector<T,A>::vector(size_t n, const T& val, const A& a) : vb{a,n} {

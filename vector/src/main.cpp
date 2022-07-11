@@ -11,6 +11,6 @@ static int i;
 
 int main() {
     std::cout << i << std::endl;
-    vector <int> v {};
+    vector<int> v {};
 	return 0;
 }

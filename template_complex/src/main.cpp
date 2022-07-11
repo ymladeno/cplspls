@@ -20,6 +20,7 @@ public:
         : re{ r }, im{ i } {}
 
     complex(const complex&);                //default copy ctor
+
     template<typename X>
     complex(const complex<X>&);             // conversion from complex<X> to complex<T>
 
@@ -39,6 +40,7 @@ public:
     constexpr T imag() { return im; }
 };
 
+// specialization for float, because it's not efficient to pass floats by references
 template<>
 class complex<float> {
     float re, im;

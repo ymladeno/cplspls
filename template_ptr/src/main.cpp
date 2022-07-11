@@ -20,13 +20,10 @@ struct Circle : public Shape {
 template<typename T>
 class Ptr {
     T* p;
-
 public:
     Ptr(T* t) : p{t} {}
-
     // copy constructor
     Ptr(const Ptr& x) : p{x.p} {}
-
     // convert Ptr<T> to Ptr<T2>
     template<typename T2>
     explicit operator Ptr<T2>();
@@ -43,10 +40,9 @@ Ptr<T>::operator Ptr<T2>()
 void f(Ptr<Circle> pc)
 {
     // should work
-    Ptr<Shape> ps {pc};
-
+    Ptr<Shape> ps{pc};
     // should give error
-    Ptr<Circle> pc2 {ps};
+    Ptr<Circle> pc2{ps};
 }
 
 int main() {
